@@ -3,7 +3,7 @@
 // - si le serveur renvoie 401 (token expiré ou invalide),
 //   on vide le localStorage et on renvoie l'utilisateur sur /admin/login
 
-const API_URL = "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:5000";
 
 export const adminFetch = async (path: string, options: RequestInit = {}) => {
   const token = localStorage.getItem("adminToken");
