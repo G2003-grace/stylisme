@@ -56,6 +56,7 @@ const Catalogue = () => {
 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -70,6 +71,11 @@ const Catalogue = () => {
     setPreviewImage(null);
     setFileName("");
   };
+
+  const descriptionTrimmed = description.trim();
+  const descriptionLink = descriptionTrimmed
+    ? `/mesures?description=${encodeURIComponent(descriptionTrimmed)}`
+    : "/mesures";
 
   return (
     <div className="bg-[#FAF6F0] text-[#1a1a1a] min-h-screen">
@@ -227,7 +233,101 @@ const Catalogue = () => {
         </div>
       </section>
 
-      
+      {/* DÉCRIRE LE MODÈLE PAR ÉCRIT */}
+      <section className="bg-[#FAF6F0] py-24 px-10 border-t border-[#C8A165]/20">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-[#C8A165] text-xs tracking-[0.4em] uppercase mb-4">
+              Pas de photo ? Pas de problème
+            </p>
+            <h2 className="font-serif text-4xl md:text-5xl font-semibold mb-4">
+              Décrivez votre modèle
+            </h2>
+            <div className="w-16 h-px bg-[#C8A165] mx-auto mb-6"></div>
+            <p className="text-gray-600 max-w-2xl mx-auto font-light leading-relaxed">
+              Vous avez une idée précise en tête mais aucune image, ou votre modèle ne figure pas
+              dans le catalogue ? Décrivez-le-nous avec vos propres mots, nous lui donnerons vie.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
+
+            {/* Inspiration / conseils */}
+            <div className="md:col-span-1">
+              <p className="text-[#C8A165] text-xs tracking-[0.4em] uppercase mb-5">
+                À préciser
+              </p>
+              <ul className="space-y-3 text-sm text-gray-600 font-light leading-relaxed">
+                <li className="flex gap-3">
+                  <span className="text-[#C8A165]">—</span>
+                  <span>Type de tenue (robe, ensemble, boubou…)</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-[#C8A165]">—</span>
+                  <span>Coupe et longueur (cintrée, fluide, mi-longue, longue…)</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-[#C8A165]">—</span>
+                  <span>Manches et encolure (sans manches, col v, col bateau…)</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-[#C8A165]">—</span>
+                  <span>Détails (broderie, perles, dentelle, ornements…)</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-[#C8A165]">—</span>
+                  <span>Occasion (mariage, soirée, cérémonie…)</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Zone de description */}
+            <div className="md:col-span-2">
+              <label
+                htmlFor="model-description"
+                className="text-xs tracking-[0.3em] uppercase text-gray-600 block mb-3"
+              >
+                Votre description
+              </label>
+              <textarea
+                id="model-description"
+                rows={9}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Ex : une robe longue cintrée à la taille, en wax bleu nuit, avec un col bateau, des manches 3/4, une ouverture en V dans le dos et une finition en dentelle dorée au niveau de l'ourlet. Pour un mariage en soirée."
+                className="w-full bg-white border border-[#C8A165]/30 focus:border-[#C8A165] focus:outline-none p-5 text-sm text-gray-700 font-light leading-relaxed resize-none transition placeholder:text-gray-400"
+              />
+
+              <div className="mt-4 flex items-center justify-between flex-wrap gap-3">
+                <p className="text-xs text-gray-500 font-light">
+                  {descriptionTrimmed.length > 0
+                    ? `${descriptionTrimmed.length} caractère${descriptionTrimmed.length > 1 ? "s" : ""}`
+                    : "Plus c'est détaillé, mieux c'est."}
+                </p>
+
+                {descriptionTrimmed.length >= 20 ? (
+                  <Link
+                    to={descriptionLink}
+                    className="inline-block bg-[#C8A165] text-white px-10 py-4 tracking-[0.2em] uppercase text-xs hover:bg-[#b08e51] transition"
+                  >
+                    Continuer vers les mesures
+                  </Link>
+                ) : (
+                  <button
+                    type="button"
+                    disabled
+                    className="bg-[#C8A165] text-white px-10 py-4 tracking-[0.2em] uppercase text-xs opacity-40 cursor-not-allowed"
+                  >
+                    Décrivez d'abord votre modèle
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
       <section className="bg-[#2a2520] py-24 px-10 text-center text-white">
         <h2 className="font-serif text-4xl md:text-5xl font-semibold mb-4">
           Une création sur mesure ?
@@ -263,7 +363,7 @@ const Catalogue = () => {
           <div>
             <h4 className="text-[#C8A165] tracking-[0.3em] uppercase text-xs mb-5">Contact</h4>
             <p className="text-gray-400 text-sm mb-2">adandedjansamuel@gmail.com</p>
-            <p className="text-gray-400 text-sm mb-2">+229 97454142</p>
+            <a href="tel:+22997454142" className="block text-gray-400 text-sm mb-2 hover:text-[#C8A165] transition">+229 97454142</a>
             <p className="text-gray-400 text-sm">Cotonou, Bénin</p>
           </div>
 

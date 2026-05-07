@@ -33,7 +33,7 @@ const Contact = () => {
               </div>
               <div>
                 <p className="text-[#C8A165] text-xs tracking-[0.3em] uppercase mb-2">Téléphone</p>
-                <p className="text-gray-700">+229 0197454142</p>
+                <a href="tel:+2290197454142" className="text-gray-700 hover:text-[#C8A165] transition">+229 0197454142</a>
               </div>
               <div>
                 <p className="text-[#C8A165] text-xs tracking-[0.3em] uppercase mb-2">Atelier</p>
@@ -115,8 +115,8 @@ const Contact = () => {
 
           <div>
             <h4 className="text-[#C8A165] tracking-[0.3em] uppercase text-xs mb-5">Contact</h4>
-            <p className="text-gray-400 text-sm mb-2">contact@samstyle.com</p>
-            <p className="text-gray-400 text-sm mb-2">+XXX XX XX XX XX</p>
+            <p className="text-gray-400 text-sm mb-2">adandedjansamuel@gmail.com</p>
+            <p className="text-gray-400 text-sm mb-2">+229 01 97 45 41 42</p>
             <p className="text-gray-400 text-sm">Cotonou, Bénin</p>
           </div>
 

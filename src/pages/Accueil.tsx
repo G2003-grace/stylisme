@@ -187,7 +187,7 @@ const Accueil = () => {
           <div>
             <h4 className="text-[#C8A165] tracking-[0.3em] uppercase text-xs mb-5">Contact</h4>
             <p className="text-gray-400 text-sm mb-2">adandedjansamuel@gmail.com</p>
-            <p className="text-gray-400 text-sm mb-2">+229 97454142</p>
+            <a href="tel:+22997454142" className="block text-gray-400 text-sm mb-2 hover:text-[#C8A165] transition">+229 97454142</a>
             <p className="text-gray-400 text-sm">Cotonou, Bénin</p>
           </div>
 
