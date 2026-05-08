@@ -40,6 +40,9 @@ const Admin = () => {
           <NavLink to="/admin/commandes" className={linkClass}>
             Commandes
           </NavLink>
+          <NavLink to="/admin/inscriptions" className={linkClass}>
+            Inscriptions
+          </NavLink>
           <NavLink to="/admin/clients" className={linkClass}>
             Clients
           </NavLink>

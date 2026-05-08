@@ -1,0 +1,20 @@
+# Configuration Render — déploiement automatique du backend
+# https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: samstyle-api
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: DATABASE_URL
+        sync: false
+      - key: DB_SSL
+        value: "true"
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false

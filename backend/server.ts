@@ -6,7 +6,20 @@ import pool from "./db";
 
 const app = express();
 
-app.use(cors());
+// CORS : en prod, on n'autorise que les origines listées dans CORS_ORIGINS
+// (ex: "https://stylisme.vercel.app,https://samstyle.com").
+// En dev (variable absente), on laisse tout passer.
+const allowedOrigins = (process.env.CORS_ORIGINS ?? "")
+  .split(",")
+  .map((o) => o.trim())
+  .filter(Boolean);
+
+app.use(
+  cors({
+    origin: allowedOrigins.length === 0 ? true : allowedOrigins,
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 // ============================================================
@@ -172,6 +185,86 @@ app.post("/orders/public", async (req, res) => {
   } finally {
     conn.release();
   }
+});
+
+// ============================================================
+// INSCRIPTIONS À LA FORMATION
+// ============================================================
+
+// PUBLIC : créer une inscription
+app.post("/inscriptions/public", async (req, res) => {
+  const { prenom, nom, email, contact, niveau, motivation, session, prix } = req.body;
+
+  if (!prenom || !nom || !email || !contact || !niveau) {
+    return res.status(400).json({ error: "Champs obligatoires manquants" });
+  }
+
+  try {
+    const [insert] = await pool.query<ResultSetHeader>(
+      `INSERT INTO inscriptions (prenom, nom, email, contact, niveau, motivation, session, prix)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        prenom,
+        nom,
+        email,
+        contact,
+        niveau,
+        motivation || null,
+        session || "Juin 2026",
+        prix ?? 5000,
+      ]
+    );
+
+    res.json({
+      success: true,
+      idinscription: insert.insertId,
+    });
+  } catch (err) {
+    res.status(500).json({ error: (err as Error).message });
+  }
+});
+
+// ADMIN : liste des inscriptions
+app.get("/inscriptions", requireAdmin, async (_req, res) => {
+  const [rows] = await pool.query(
+    `SELECT
+       idinscription,
+       prenom,
+       nom,
+       email,
+       contact,
+       niveau,
+       motivation,
+       session,
+       prix,
+       statut,
+       date_inscription
+     FROM inscriptions
+     ORDER BY date_inscription DESC`
+  );
+  res.json(rows);
+});
+
+// ADMIN : change le statut d'une inscription
+app.put("/inscriptions/:id/status", requireAdmin, async (req, res) => {
+  const { id } = req.params;
+  const { statut } = req.body;
+
+  const allowed = ["En attente", "Payée", "Confirmée", "Annulée"];
+  if (!allowed.includes(statut)) {
+    return res.status(400).json({ error: "Statut invalide" });
+  }
+
+  const [result] = await pool.query<ResultSetHeader>(
+    "UPDATE inscriptions SET statut = ? WHERE idinscription = ?",
+    [statut, id]
+  );
+
+  if (result.affectedRows === 0) {
+    return res.status(404).json({ error: "Inscription introuvable" });
+  }
+
+  res.json({ success: true });
 });
 
 const PORT = process.env.PORT || 5000;

@@ -151,6 +151,106 @@ const Accueil = () => {
         </div>
       </section>
 
+      {/* FORMATION JUIN */}
+      <section className="bg-[#F5EBD8] py-24 px-10 border-t border-b border-[#C8A165]/30">
+        <div className="max-w-5xl mx-auto">
+
+          <div className="text-center mb-12">
+            <p className="inline-block bg-[#C8A165] text-white text-xs tracking-[0.4em] uppercase px-4 py-2 mb-6">
+              Nouveau · Session de juin
+            </p>
+            <h2 className="font-serif text-4xl md:text-5xl font-semibold mb-4 text-[#1a1a1a]">
+              Apprenez la couture <br className="hidden md:block" />avec SamStyle
+            </h2>
+            <div className="w-16 h-px bg-[#C8A165] mx-auto mb-6"></div>
+            <p className="text-gray-700 max-w-2xl mx-auto font-light leading-relaxed">
+              Une formation pratique pour découvrir les bases de la couture moderne et traditionnelle :
+              prise de mesures, coupe, assemblage et finitions. Petits groupes, accompagnement personnalisé.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+
+            <div className="bg-white p-8 text-center border border-[#C8A165]/20">
+              <p className="text-[#C8A165] text-xs tracking-[0.3em] uppercase mb-3">Période</p>
+              <p className="font-serif text-2xl text-[#1a1a1a] mb-1">Juin 2026</p>
+              <p className="text-sm text-gray-600 font-light">Du lundi au vendredi</p>
+            </div>
+
+            <div className="bg-white p-8 text-center border border-[#C8A165]/20">
+              <p className="text-[#C8A165] text-xs tracking-[0.3em] uppercase mb-3">Lieu</p>
+              <p className="font-serif text-2xl text-[#1a1a1a] mb-1">Atelier SamStyle</p>
+              <p className="text-sm text-gray-600 font-light">Cotonou, Bénin</p>
+            </div>
+
+            <div className="bg-white p-8 text-center border border-[#C8A165]/20">
+              <p className="text-[#C8A165] text-xs tracking-[0.3em] uppercase mb-3">Places</p>
+              <p className="font-serif text-2xl text-[#1a1a1a] mb-1">Limitées</p>
+              <p className="text-sm text-gray-600 font-light">Inscription requise</p>
+            </div>
+
+          </div>
+
+          <div className="bg-white p-10 md:p-12 border border-[#C8A165]/20">
+            <p className="text-[#C8A165] text-xs tracking-[0.4em] uppercase mb-6 text-center">Au programme</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-5 max-w-3xl mx-auto">
+              <div className="flex gap-3">
+                <span className="text-[#C8A165] font-serif">01</span>
+                <p className="text-gray-700 font-light text-sm leading-relaxed">
+                  Initiation à la machine à coudre et entretien
+                </p>
+              </div>
+              <div className="flex gap-3">
+                <span className="text-[#C8A165] font-serif">02</span>
+                <p className="text-gray-700 font-light text-sm leading-relaxed">
+                  Prise de mesures et lecture de patrons
+                </p>
+              </div>
+              <div className="flex gap-3">
+                <span className="text-[#C8A165] font-serif">03</span>
+                <p className="text-gray-700 font-light text-sm leading-relaxed">
+                  Coupe sur tissu wax, soie et coton
+                </p>
+              </div>
+              <div className="flex gap-3">
+                <span className="text-[#C8A165] font-serif">04</span>
+                <p className="text-gray-700 font-light text-sm leading-relaxed">
+                  Assemblage, ourlets et finitions
+                </p>
+              </div>
+              <div className="flex gap-3">
+                <span className="text-[#C8A165] font-serif">05</span>
+                <p className="text-gray-700 font-light text-sm leading-relaxed">
+                  Réalisation d'une pièce complète
+                </p>
+              </div>
+              <div className="flex gap-3">
+                <span className="text-[#C8A165] font-serif">06</span>
+                <p className="text-gray-700 font-light text-sm leading-relaxed">
+                  Conseils pour lancer son activité
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-12 text-center">
+            <Link
+              to="/inscription"
+              className="inline-block bg-[#1a1a1a] text-white px-12 py-4 tracking-[0.25em] uppercase text-xs hover:bg-[#C8A165] transition mr-3 mb-3"
+            >
+              Je m'inscris · 5 000 FCFA
+            </Link>
+            <a
+              href="tel:+22997454142"
+              className="inline-block border border-[#C8A165] text-[#C8A165] px-12 py-4 tracking-[0.25em] uppercase text-xs hover:bg-[#C8A165] hover:text-white transition mb-3"
+            >
+              Plus d'infos · Appeler
+            </a>
+          </div>
+
+        </div>
+      </section>
+
   
       <section className="bg-[#2a2520] py-24 px-10 text-center text-white">
         <h2 className="font-serif text-4xl md:text-5xl font-semibold mb-4">
