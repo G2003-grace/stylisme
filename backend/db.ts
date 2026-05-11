@@ -1,4 +1,4 @@
-import mysql from "mysql2/promise";
+import mysql, { type PoolOptions } from "mysql2/promise";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -10,23 +10,30 @@ function required(name: string): string {
   return value;
 }
 
-// La plupart des MySQL hébergés (Aiven, Railway, Clever Cloud, etc.) exigent SSL.
+// La plupart des MySQL hébergés (TiDB, Aiven, Railway, etc.) exigent SSL.
 // On l'active dès que DB_SSL=true, et on accepte aussi DATABASE_URL si fourni.
 const useSsl = process.env.DB_SSL === "true";
 
-const pool = process.env.DATABASE_URL
-  ? mysql.createPool({
-      uri: process.env.DATABASE_URL,
-      ssl: useSsl ? { rejectUnauthorized: false } : undefined,
-    })
-  : mysql.createPool({
-      host: required("DB_HOST"),
-      port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
-      user: required("DB_USER"),
-      password: process.env.DB_PASSWORD ?? "",
-      database: required("DB_NAME"),
-      ssl: useSsl ? { rejectUnauthorized: false } : undefined,
-      connectionLimit: 10,
-    });
+let poolOptions: PoolOptions;
+
+if (process.env.DATABASE_URL) {
+  poolOptions = { uri: process.env.DATABASE_URL };
+} else {
+  poolOptions = {
+    host: required("DB_HOST"),
+    port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
+    user: required("DB_USER"),
+    password: process.env.DB_PASSWORD ?? "",
+    database: required("DB_NAME"),
+    connectionLimit: 10,
+  };
+}
+
+// On n'ajoute la clé `ssl` que si nécessaire (exactOptionalPropertyTypes refuse undefined)
+if (useSsl) {
+  poolOptions.ssl = { rejectUnauthorized: false };
+}
+
+const pool = mysql.createPool(poolOptions);
 
 export default pool;
