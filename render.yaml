@@ -1,0 +1,28 @@
+# Configuration Render — Blueprint racine
+# Doc : https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: samstyle-api
+    runtime: node
+    rootDir: backend
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      # ----- Base de données TiDB Cloud -----
+      # Préférer DATABASE_URL (URI complète mysql://user:pass@host:port/db)
+      # OU les variables séparées DB_HOST/DB_PORT/DB_USER/DB_PASSWORD/DB_NAME
+      - key: DATABASE_URL
+        sync: false
+      - key: DB_SSL
+        value: "true"
+      # ----- Sécurité -----
+      - key: ADMIN_PASSWORD
+        sync: false
+      # ----- CORS : URL Vercel du frontend -----
+      # ex: https://samstyle.vercel.app,https://samstyle.com
+      - key: CORS_ORIGINS
+        sync: false

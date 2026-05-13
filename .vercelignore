@@ -1,0 +1,9 @@
+# Vercel ne doit PAS déployer le backend — il va sur Render.
+backend/
+
+# Fichiers inutiles au déploiement frontend
+*.md
+!index.html
+.env
+.env.*
+!.env.example
