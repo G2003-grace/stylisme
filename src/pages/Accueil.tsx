@@ -241,7 +241,7 @@ const Accueil = () => {
               Je m'inscris · 5 000 FCFA
             </Link>
             <a
-              href="tel:+22997454142"
+              href="tel:+2290197454142"
               className="inline-block border border-[#C8A165] text-[#C8A165] px-12 py-4 tracking-[0.25em] uppercase text-xs hover:bg-[#C8A165] hover:text-white transition mb-3"
             >
               Plus d'infos · Appeler
@@ -287,7 +287,7 @@ const Accueil = () => {
           <div>
             <h4 className="text-[#C8A165] tracking-[0.3em] uppercase text-xs mb-5">Contact</h4>
             <p className="text-gray-400 text-sm mb-2">adandedjansamuel@gmail.com</p>
-            <a href="tel:+22997454142" className="block text-gray-400 text-sm mb-2 hover:text-[#C8A165] transition">+229 97454142</a>
+            <a href="tel:+2290197454142" className="block text-gray-400 text-sm mb-2 hover:text-[#C8A165] transition">+229 0197454142</a>
             <p className="text-gray-400 text-sm">Cotonou, Bénin</p>
           </div>
 
