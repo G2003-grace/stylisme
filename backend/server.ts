@@ -187,6 +187,86 @@ app.post("/orders/public", async (req, res) => {
   }
 });
 
+// COMMANDES PUBLIQUES : un client consulte ses commandes via son email
+app.get("/orders/by-email/:email", async (req, res) => {
+  const email = req.params.email.trim().toLowerCase();
+  if (!email) {
+    return res.status(400).json({ error: "Email manquant" });
+  }
+
+  const [rows] = await pool.query<RowDataPacket[]>(
+    `SELECT
+       cmd.idcommande,
+       cmd.modele,
+       cmd.tissu,
+       cmd.prix,
+       cmd.statut,
+       cmd.date_commande,
+       cmd.date_livraison,
+       c.prenom AS client_prenom,
+       c.nom    AS client_nom
+     FROM commandes cmd
+     JOIN clients c ON cmd.idclient = c.idclient
+     WHERE c.email = ?
+     ORDER BY cmd.date_commande DESC`,
+    [email]
+  );
+  res.json(rows);
+});
+
+// ============================================================
+// PRODUITS (catalogue admin)
+// ============================================================
+
+app.get("/products", requireAdmin, async (_req, res) => {
+  const [rows] = await pool.query(
+    `SELECT idproduit, nom, prix, stock, image, created_at
+     FROM produits
+     ORDER BY created_at DESC`
+  );
+  res.json(rows);
+});
+
+app.post("/products", requireAdmin, async (req, res) => {
+  const { nom, prix, stock, image } = req.body;
+  if (!nom || prix == null) {
+    return res.status(400).json({ error: "Nom et prix obligatoires" });
+  }
+
+  const [result] = await pool.query<ResultSetHeader>(
+    "INSERT INTO produits (nom, prix, stock, image) VALUES (?, ?, ?, ?)",
+    [nom, Number(prix), Number(stock ?? 0), image || null]
+  );
+  res.json({ success: true, idproduit: result.insertId });
+});
+
+app.put("/products/:id", requireAdmin, async (req, res) => {
+  const { id } = req.params;
+  const { nom, prix, stock, image } = req.body;
+
+  const [result] = await pool.query<ResultSetHeader>(
+    "UPDATE produits SET nom = ?, prix = ?, stock = ?, image = ? WHERE idproduit = ?",
+    [nom, Number(prix), Number(stock ?? 0), image || null, id]
+  );
+
+  if (result.affectedRows === 0) {
+    return res.status(404).json({ error: "Produit introuvable" });
+  }
+  res.json({ success: true });
+});
+
+app.delete("/products/:id", requireAdmin, async (req, res) => {
+  const { id } = req.params;
+  const [result] = await pool.query<ResultSetHeader>(
+    "DELETE FROM produits WHERE idproduit = ?",
+    [id]
+  );
+  if (result.affectedRows === 0) {
+    return res.status(404).json({ error: "Produit introuvable" });
+  }
+  res.json({ success: true });
+});
+
 // ============================================================
 // INSCRIPTIONS À LA FORMATION
 // ============================================================

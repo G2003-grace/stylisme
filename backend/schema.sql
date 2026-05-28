@@ -45,3 +45,12 @@ CREATE TABLE IF NOT EXISTS inscriptions (
 
 CREATE INDEX idx_inscriptions_statut  ON inscriptions(statut);
 CREATE INDEX idx_inscriptions_session ON inscriptions(session);
+
+CREATE TABLE IF NOT EXISTS produits (
+  idproduit   INT AUTO_INCREMENT PRIMARY KEY,
+  nom         VARCHAR(190) NOT NULL,
+  prix        INT NOT NULL DEFAULT 0,
+  stock       INT NOT NULL DEFAULT 0,
+  image       VARCHAR(255) NULL,
+  created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -30,9 +30,6 @@ const Navbar: React.FC = () => {
         </Link>
       </nav>
 
-        <Link to="/admin" className="hover:text-[#C8A165] transition">
-          Admin
-        </Link>
       <div className="flex items-center gap-6">
         <Link
           to="/clients"

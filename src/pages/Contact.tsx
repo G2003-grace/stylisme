@@ -1,4 +1,23 @@
+import { useState, type ChangeEvent, type FormEvent } from "react";
+
 const Contact = () => {
+  const [form, setForm] = useState({ nom: "", email: "", message: "" });
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const subject = `Contact SamStyle — ${form.nom || "Sans nom"}`;
+    const body = `${form.message}\n\n—\n${form.nom}\n${form.email}`;
+    window.location.href = `mailto:adandedjansamuel@gmail.com?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+  };
+
   return (
     <div className="bg-[#FAF6F0] text-[#1a1a1a] min-h-screen">
 
@@ -54,13 +73,17 @@ const Contact = () => {
             </h2>
             <div className="w-12 h-px bg-[#C8A165] mb-10"></div>
 
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label className="text-xs tracking-[0.3em] uppercase text-gray-600 block mb-2">
                   Nom
                 </label>
                 <input
                   type="text"
+                  name="nom"
+                  value={form.nom}
+                  onChange={handleChange}
+                  required
                   className="w-full bg-transparent border-b border-gray-400 py-2 focus:outline-none focus:border-[#C8A165] transition"
                 />
               </div>
@@ -71,6 +94,10 @@ const Contact = () => {
                 </label>
                 <input
                   type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
                   className="w-full bg-transparent border-b border-gray-400 py-2 focus:outline-none focus:border-[#C8A165] transition"
                 />
               </div>
@@ -80,7 +107,11 @@ const Contact = () => {
                   Message
                 </label>
                 <textarea
+                  name="message"
                   rows={4}
+                  value={form.message}
+                  onChange={handleChange}
+                  required
                   className="w-full bg-transparent border-b border-gray-400 py-2 focus:outline-none focus:border-[#C8A165] transition resize-none"
                 />
               </div>
@@ -116,7 +147,7 @@ const Contact = () => {
           <div>
             <h4 className="text-[#C8A165] tracking-[0.3em] uppercase text-xs mb-5">Contact</h4>
             <p className="text-gray-400 text-sm mb-2">adandedjansamuel@gmail.com</p>
-            <p className="text-gray-400 text-sm mb-2">+229 01 97 45 41 42</p>
+            <a href="tel:+2290197454142" className="block text-gray-400 text-sm mb-2 hover:text-[#C8A165] transition">+229 0197454142</a>
             <p className="text-gray-400 text-sm">Cotonou, Bénin</p>
           </div>
 
